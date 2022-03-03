@@ -74,17 +74,12 @@
         
         window.superSDK_Async = function() {
             
-            superSDK.init({accessKey: "V70F/5XPZG3E-C3Z4W7Y-HYNPR2Z-8WG6FTV", secretKey: "2f6df80d-60fe-4e1f-8fab-6c0b472067eb"},function(response){
-                console.log("init api call response ", response);
-            });
+            superSDK.init({accessKey: "V70F/5XPZG3E-C3Z4W7Y-HYNPR2Z-8WG6FTV", secretKey: "2f6df80d-60fe-4e1f-8fab-6c0b472067eb"},function(response){});
             superSDK.setup({
                 store_name : "My SUPER STORE",
                 triggerer: "render_zone",
                 store_logo_url : 'https://freevector-images.s3.amazonaws.com/uploads/vector/preview/36682/36682.png',
                 frame_color: '#3289a8'
-            });
-            superSDK.listen("YOLO",function(){
-                console.log('YOLO event occurs');
             });
             superSDK.addItem({
                 name : "Cassou Ndecki",
@@ -92,17 +87,6 @@
                 unit_price : 5000,
                 item_photo : 'https://spaces-cdn.clipsafari.com/9c9s0lq3udqzperzg321eh8y4y7b'
             });
-            superSDK.listen('PAYMENT_SUCCEEDED', function(){
-                // publisher can listen to when payment is successfull
-                alert("Publisher : le paiement s'est bien passé !")
-            });
-            superSDK.listen('PAYMENT_FAILED', function(){
-                // publisher can listen to when payment is failed
-                alert("Publisher : le paiement s'est mal passé !")
-            });
-            superSDK.listen('CHECKOUT_IFRAME_CLOSED', function(){
-                alert("Publisher : la fenêtre de payment a été fermé");
-            })
             // define superSDK navigation
             superSDK.setNavigation({
                 success_url : '/thank-you.html',
