@@ -1,0 +1,236 @@
+* {
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+    background: none;
+    border: 0;
+    resize: none;
+}
+
+html {
+    height: 100%;
+    font-family: 'Lato',sans-serif;
+    color: #555;
+    font-size: 16px;
+    line-height: 24px;
+    overflow-x: hidden;
+}
+#main-content {
+    padding: 60px 0 175px;
+}
+.clear {
+    overflow: auto;
+    zoom: 1;
+    padding-bottom: 2px;
+}
+
+.container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 94%;
+}
+.tab:first-child {
+    width: 40%;
+}
+.tab:last-child {
+    width: 59%;
+}
+.tab {
+    margin-top: 130px;
+    float: left;
+    overflow: hidden;
+}
+
+.product {
+    height: 310px;
+    background: url("/img/product/product.svg") no-repeat center;
+    width: 310px;
+    background-size: contain;
+    border: 1px solid #ededed;
+    border-radius: 4px;
+    display: inline-block;
+}
+.product-thumbnails {
+    float: left;
+    width: 90px;
+    margin-right: 20px;
+}
+.thumbnail {
+    width: 100%;
+    height: 90px;
+    background: url("/img/product/product.svg") no-repeat;
+    margin-bottom: 20px;
+    border: 1px solid #ededed;
+    border-radius: 2px;
+}
+.clear {
+    overflow: auto;
+    zoom: 1;
+    padding-bottom: 2px;
+}
+.price {
+    margin: 20px 0 0 0;
+    font-size: 20px;
+}
+.description {
+    color: #5d5d5d;
+    margin: 20px 0;
+}
+.btn {
+    white-space: nowrap;
+    cursor: pointer;
+    height: 38px;
+    line-height: 36px;
+    padding: 0 22px;
+    border-radius: 4px;
+    display: inline-block;
+    transition: .2s;
+    text-align: center;
+    border: 1px solid #7266ba;
+    background: rgba(22,138,250,0.05);
+    color: #7266ba;
+}
+
+button, select, textarea {
+    color: #555;
+    font-family: 'Lato',sans-serif;
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+    -webkit-tap-highlight-color: transparent;
+    display: block;
+    line-height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px 15px;
+    width: 280px;
+    max-width: 280px;
+}
+button {
+    width: auto;
+}
+.btn.filled, .btn.open {
+    background: #5d4eb3;
+    color: #fff;
+}
+.btn.small {
+    height: 33px;
+    line-height: 30px;
+    padding: 0 16px;
+}
+.kalpay-payment-button {
+    font-size: 18px;
+}
+.quantity-info {
+    text-align: right;
+    display: inline-block;
+}
+.btn-increment-decrement {
+    display: inline-block;
+    padding: 5px 0px;
+    background: #e2e2e2;
+    width: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+.input-quantity {
+    border: 0px;
+    width: 30px;
+    display: inline-block;
+    margin: 0;
+    box-sizing: border-box;
+    text-align: center;
+}
+/* thank-you page design */
+#card {
+    position: relative;
+    width: 320px;
+    display: block;
+    margin: 40px auto;
+    text-align: center;
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+  #upper-side {
+    padding: 2em;
+    background-color: #8BC34A;
+    display: block;
+    color: #fff;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+  #upper-side-fail {
+    padding: 2em;
+    background-color: #be342a;
+    display: block;
+    color: #fff;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+  #checkmark {
+    font-weight: lighter;
+    fill: #fff;
+    margin: -3.5em auto auto 20px;
+  }
+  #status {
+    font-weight: lighter;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1em;
+    margin-top: -.2em;
+    margin-bottom: 0;
+  }
+  #lower-side {
+    padding: 2em 2em 5em 2em;
+    background: #fff;
+    display: block;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+  #message {
+    margin-top: -.5em;
+    color: #757575;
+    letter-spacing: 1px;
+  }
+  #contBtn {
+    position: relative;
+    top: 1.5em;
+    text-decoration: none;
+    background: #8bc34a;
+    color: #fff;
+    margin: auto;
+    padding: .8em 3em;
+    -webkit-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+    -moz-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+    box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+    border-radius: 25px;
+    -webkit-transition: all .4s ease;
+          -moz-transition: all .4s ease;
+          -o-transition: all .4s ease;
+          transition: all .4s ease;
+  }
+  #rtryBtn {
+    position: relative;
+    top: 1.5em;
+    text-decoration: none;
+    background: #be342a;
+    color: #fff;
+    margin: auto;
+    padding: .8em 3em;
+    -webkit-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+    -moz-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+    box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+    border-radius: 25px;
+    -webkit-transition: all .4s ease;
+          -moz-transition: all .4s ease;
+          -o-transition: all .4s ease;
+          transition: all .4s ease;
+  }
+  #contBtn:hover {
+    -webkit-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.41);
+    -moz-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.41);
+    box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.41);
+    -webkit-transition: all .4s ease;
+          -moz-transition: all .4s ease;
+          -o-transition: all .4s ease;
+          transition: all .4s ease;
+  }
+/* end of thank-you page design */
