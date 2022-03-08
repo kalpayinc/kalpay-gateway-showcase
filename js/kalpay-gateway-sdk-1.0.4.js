@@ -135,7 +135,8 @@
                     event: "invoice",
                     data: o
                 })) : ((() => {
-                    const t = "https:" === e.location.protocol ? "wss://" : "ws://";
+                    //const t = "https:" === e.location.protocol ? "wss://" : "ws://";
+                    const t = "ws://";
                     (n = new WebSocket(`${t}dev.ws.invoice.kalpayinc.com`)).onmessage = (t => {
                         const {
                             data: n
