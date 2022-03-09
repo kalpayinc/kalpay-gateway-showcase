@@ -2,7 +2,8 @@
     var t = function() {},
         n = null;
     const o = () => {
-        (n = new WebSocket("ws://dev.ws.invoice.kalpayinc.com")).onmessage = (t => {
+        const t = "https:" === e.location.protocol ? "wss://" : "ws://";
+        (n = new WebSocket(`${t}dev.ws.invoice.kalpayinc.com`)).onmessage = (t => {
             const {
                 data: n
             } = t;
@@ -147,7 +148,7 @@
                 if (r) e.superSDK.modal_rpc.initTransactionCllbk(!0, null), n && 1 === n.readyState ? n.send(JSON.stringify({
                     event: "invoice",
                     data: s
-                })) : (o(), 1 === n.readyState && n.send(JSON.stringify({
+                })) : (o(), n.send(JSON.stringify({
                     event: "invoice",
                     data: s
                 }))), console.log("is ws_client up : ", n && 1 === n.readyState);
