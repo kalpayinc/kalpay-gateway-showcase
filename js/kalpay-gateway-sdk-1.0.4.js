@@ -112,12 +112,12 @@
             var t = e.superSDK;
             setTimeout(() => {
                 i(), t.settings.success_url && (e.location = t.settings.success_url)
-            }, 2e3)
+            }, 3e3)
         }), this.listen("PAYMENT_FAILED", function() {
             var t = e.superSDK;
             setTimeout(() => {
                 i(), t.settings.failed_url && (e.location = t.settings.failed_url)
-            }, 2e3)
+            }, 3e3)
         })
     }, t.prototype.setup = function(e) {
         e = e || {}, this.settings = {
