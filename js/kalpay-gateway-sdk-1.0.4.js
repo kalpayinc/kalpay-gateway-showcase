@@ -9,7 +9,7 @@
             if (n) {
                 const t = JSON.parse(n),
                     o = !!t.isTransactionComplete && t.isTransactionComplete;
-                e.superSDK.modal_rpc.completeTransactionCllbk(o, null)
+                e.superSDK.modal_rpc.completeTransactionCllbk(o, null), o ? broadcast("PAYMENT_SUCCEEDED") : broadcast("PAYMENT_FAILED")
             }
         })
     };
@@ -112,12 +112,12 @@
             var t = e.superSDK;
             setTimeout(() => {
                 i(), t.settings.success_url && (e.location = t.settings.success_url)
-            }, 1e3)
+            }, 2e3)
         }), this.listen("PAYMENT_FAILED", function() {
             var t = e.superSDK;
             setTimeout(() => {
                 i(), t.settings.failed_url && (e.location = t.settings.failed_url)
-            }, 1e3)
+            }, 2e3)
         })
     }, t.prototype.setup = function(e) {
         e = e || {}, this.settings = {
@@ -144,15 +144,15 @@
                     data: r,
                     error: i
                 } = t;
-                if (r) e.superSDK.modal_rpc.initTransactionCllbk(!0, null), n && (1 === n.readyState ? (console.log("ws_client opened and ready "), n.send(JSON.stringify({
+                if (r) e.superSDK.modal_rpc.initTransactionCllbk(!0, null), n && (1 === n.readyState ? n.send(JSON.stringify({
                     event: "invoice",
                     data: s
-                }))) : (o(), n.onopen = (e => {
-                    console.log("ws_client on opened event "), n.send(JSON.stringify({
+                })) : (o(), n.onopen = (e => {
+                    n.send(JSON.stringify({
                         event: "invoice",
                         data: s
                     }))
-                }))), console.log("is ws_client not null : ", n), console.log("is ws_client up : ", n && 1 === n.readyState);
+                })));
                 else {
                     const t = JSON.parse(i);
                     e.superSDK.modal_rpc.initTransactionCllbk(!1, t.message || t.data)
@@ -215,24 +215,24 @@
             back_url: e.back_url
         }
     };
-    var l = {};
+    var u = {};
     t.prototype.listen = function(e, t) {
-        void 0 === l[e] && (l[e] = []), l[e].push(t)
+        void 0 === u[e] && (u[e] = []), u[e].push(t)
     }, t.prototype.unlisten = function(e, t) {
-        if (l[e])
-            for (let t = 0; t < l[e].length; t++) {
-                l[e][t].splice(t, 1);
+        if (u[e])
+            for (let t = 0; t < u[e].length; t++) {
+                u[e][t].splice(t, 1);
                 break
             }
     }, broadcast = function(e) {
-        if (l[e])
-            for (let t = 0; t < l[e].length; t++) {
-                (0, l[e][t])()
+        if (u[e])
+            for (let t = 0; t < u[e].length; t++) {
+                (0, u[e][t])()
             }
     };
-    var u = e.superSDK;
+    var l = e.superSDK;
     t.prototype.noConflict = function() {
-        return e.superSDK = u, new t
+        return e.superSDK = l, new t
     }, e.superSDK = new t
 }(window),
 function(e, t) {
@@ -247,14 +247,14 @@ function(e, t) {
         a = {},
         c = {},
         p = {},
-        l = !1,
-        u = "push",
+        u = !1,
+        l = "push",
         d = "readyState",
         m = "onreadystatechange";
 
     function f(e, t, n) {
         for (n = 0, j = e.length; n < j; ++n)
-            if (!t(e[n])) return l;
+            if (!t(e[n])) return u;
         return 1
     }
 
@@ -264,10 +264,10 @@ function(e, t) {
         })
     }
 
-    function g(t, n, o) {
-        t = t[u] ? t : [t];
+    function S(t, n, o) {
+        t = t[l] ? t : [t];
         var r = n && n.call,
-            l = r ? n : o,
+            u = r ? n : o,
             d = r ? t.join("") : n,
             m = t.length;
 
@@ -277,40 +277,40 @@ function(e, t) {
 
         function D() {
             if (!--m)
-                for (var e in i[d] = 1, l && l(), c) f(e.split("|"), _) && !y(c[e], _) && (c[e] = [])
+                for (var e in i[d] = 1, u && u(), c) f(e.split("|"), _) && !y(c[e], _) && (c[e] = [])
         }
         return setTimeout(function() {
             y(t, function(t) {
                 if (p[t]) return d && (a[d] = 1), 2 == p[t] && D();
-                p[t] = 1, d && (a[d] = 1), S(!s.test(t) && e ? e + t + ".js" : t, D)
+                p[t] = 1, d && (a[d] = 1), g(!s.test(t) && e ? e + t + ".js" : t, D)
             })
-        }, 0), g
+        }, 0), S
     }
 
-    function S(e, t) {
+    function g(e, t) {
         var s = n.createElement("script"),
-            r = l;
+            r = u;
         s.onload = s.onerror = s[m] = function() {
             s[d] && !/^c|loade/.test(s[d]) || r || (s.onload = s[m] = null, r = 1, p[e] = 2, t())
         }, s.async = 1, s.src = e, o.insertBefore(s, o.firstChild)
     }
     return !n[d] && n.addEventListener && (n.addEventListener("DOMContentLoaded", function e() {
-        n.removeEventListener("DOMContentLoaded", e, l), n[d] = "complete"
-    }, l), n[d] = "loading"), g.get = S, g.order = function(e, t, n) {
+        n.removeEventListener("DOMContentLoaded", e, u), n[d] = "complete"
+    }, u), n[d] = "loading"), S.get = g, S.order = function(e, t, n) {
         ! function o(s) {
-            s = e.shift(), e.length ? g(s, o) : g(s, t, n)
+            s = e.shift(), e.length ? S(s, o) : S(s, t, n)
         }()
-    }, g.path = function(t) {
+    }, S.path = function(t) {
         e = t
-    }, g.ready = function(e, t, n) {
-        e = e[u] ? e : [e];
+    }, S.ready = function(e, t, n) {
+        e = e[l] ? e : [e];
         var o, s = [];
         return !y(e, function(e) {
-            i[e] || s[u](e)
+            i[e] || s[l](e)
         }) && f(e, function(e) {
             return i[e]
-        }) ? t() : (o = e.join("|"), c[o] = c[o] || [], c[o][u](t), n && n(s)), g
-    }, g.noConflict = function() {
+        }) ? t() : (o = e.join("|"), c[o] = c[o] || [], c[o][l](t), n && n(s)), S
+    }, S.noConflict = function() {
         return t.$script = r, this
-    }, g
+    }, S
 }), "function" == typeof window.superSDK_Async && window.superSDK_Async();
