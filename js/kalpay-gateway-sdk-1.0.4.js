@@ -2,7 +2,7 @@
     var t = function() {},
         n = null;
     const o = () => {
-        (n = new WebSocket("wss://dev.ws.invoice.kalpayinc.com")).onmessage = (t => {
+        (n = new WebSocket("wss://staging.ws.invoice.kalpayinc.com")).onmessage = (t => {
             const {
                 data: n
             } = t;
@@ -16,7 +16,7 @@
     o();
     var s = function() {
             e.superSDK.easyXDM && (e.superSDK.modal_rpc = new e.superSDK.easyXDM.Rpc({
-                remote: "https://dev.gateway.kalpayinc.com/",
+                remote: "https://staging.gateway.kalpayinc.com/",
                 onReady: broadcast("IFRAME_CHECKOUT_LOADED"),
                 container: "supersdk-container",
                 props: {
@@ -74,7 +74,7 @@
             }()
         }), t.script("https://kalpay-gateway-resources.s3.us-east-2.amazonaws.com/v0/supersdk.rpc.js", function() {
             e.superSDK.easyXDM && (e.superSDK.rpc = new e.superSDK.easyXDM.Rpc({
-                remote: "https://dev.service-backend.kalpayinc.com/invoiceservice/tunnel/",
+                remote: "https://staging.service-backend.kalpayinc.com/invoiceservice/tunnel/",
                 onReady: broadcast("IFRAME_TUNNEL_LOADED")
             }, {
                 remote: {
@@ -84,7 +84,7 @@
                 const r = localStorage.getItem("supersdk.token");
                 e.superSDK.rpc.apiTunnel(t, n, o, location.host, r, s)
             }), s(), e.superSDK.easyXDM && (e.superSDK.app_rpc = new e.superSDK.easyXDM.Rpc({
-                remote: "https://dev.gateway.kalpayinc.com/",
+                remote: "https://staging.gateway.kalpayinc.com/",
                 onReady: broadcast("APP_GATEWAY_LOADED")
             }, {
                 remote: {
