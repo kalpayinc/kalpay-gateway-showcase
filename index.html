@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>:: Publisher Test Page</title>
-    <link rel="stylesheet" href="css/style.css"/>
-    
+    <link rel="stylesheet" href="css/style.css" />
+
 </head>
+
 <body>
     <div id="main-content">
         <div class="container clear">
@@ -21,10 +23,10 @@
 
                         </div>
                         <div class="thumbnail">
-                            
+
                         </div>
                         <div class="thumbnail">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -35,17 +37,22 @@
                     <h3 style="font-size: 24px; margin: 0;">Cassou Ndecki</h3>
                     <div class="price">5000 FCFA</div>
                     <div class="quantity-info product-quantity">
-                        <div id="decrement-btn"class="btn-increment-decrement" >-</div>
-                        <input id="product-qty" class="input-quantity"  value="1">
+                        <div id="decrement-btn" class="btn-increment-decrement">-</div>
+                        <input id="product-qty" class="input-quantity" value="1">
                         <div id="increment-btn" class="btn-increment-decrement">+</div>
                     </div>
                     <p class="description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                     </p>
                     <div class="payment">
                         <button onclick="(() => {
                             superSDK.items[0].quantity = parseInt(productQuty.value);
-                            superSDK.proceed(this)})()" class="kalpay-payment-button btn filled small" id="paybtn" type="button">Payer avec Kalpay</button>
+                            superSDK.proceed(this)})()" class="kalpay-payment-button btn filled small" id="paybtn"
+                            type="button">Payer avec Kalpay</button>
                     </div>
                 </div>
             </div>
@@ -53,7 +60,7 @@
     </div>
 
     <div class="container">
-        <div id="render_zone"></div>        
+        <div id="render_zone"></div>
     </div>
 
     <script>
@@ -61,43 +68,44 @@
 
         // *** SNIPPET TO GIVE TO PUBLISHER ***
         // load sdk asynchronously
-        (function(){
+        (function () {
             window.superSDK_ready = window.superSDK_ready || [];
             var script = document.createElement('script');
-            script.src = 'js/kalpay-gateway-sdk-1.0.4.js';
+            script.src = 'js/kalpay-gateway-sdk-1.0.5.js';
             script.async = true;
             var entry = document.getElementsByTagName('script')[0];
             entry.parentNode.insertBefore(script, entry);
         })();
 
         // begin to call sdk functions
-        
-        window.superSDK_Async = function() {
-            
-            superSDK.init({accessKey: "V70F/5XPZG3E-C3Z4W7Y-HYNPR2Z-8WG6FTV", secretKey: "2f6df80d-60fe-4e1f-8fab-6c0b472067eb"},function(response){});
+
+        window.superSDK_Async = function () {
+
+            superSDK.init({ accessKey: "KAL18268/16H07FQ-FB340KE-JAHWARW-RWKV4F2", secretKey: "09a203be-7ac6-404d-92a3-c563c727b23c" }, function (response) { });
             superSDK.setup({
-                store_name : "My SUPER STORE",
+                store_name: "Kalpay Payroll",
                 triggerer: "render_zone",
-                store_logo_url : 'https://freevector-images.s3.amazonaws.com/uploads/vector/preview/36682/36682.png',
+                store_logo_url: 'https://freevector-images.s3.amazonaws.com/uploads/vector/preview/36682/36682.png',
                 frame_color: '#3289a8'
             });
             superSDK.addItem({
-                name : "Cotisation / Don",
+                name: "Paiement",
                 quantity: 1,
-                unit_price : 5,
-                item_photo : 'https://images.freeimages.com/images/small-previews/266/gift-1422193.jpg'
+                unit_price: 5,
+                item_photo: 'https://images.freeimages.com/images/small-previews/266/gift-1422193.jpg'
             });
             // define superSDK navigation
             superSDK.setNavigation({
-                success_url : '/thank-you.html',
-                failed_url : '/sorry.html',
-                back_url : window.location.href
+                success_url: '/thank-you.html',
+                failed_url: '/sorry.html',
+                back_url: window.location.href
             })
-        }  
-        
+        }
+
         // *** SNIPPET TO GIVE TO PUBLISHER ***
 
     </script>
     <script src="js/test.js"></script>
 </body>
+
 </html>
