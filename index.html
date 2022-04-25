@@ -59,9 +59,6 @@
         </div>
     </div>
 
-    <div class="container">
-        <div id="render_zone"></div>
-    </div>
 
     <script>
         // example of asynchronious third party script loading
@@ -78,21 +75,21 @@
         })();
 
         // begin to call sdk functions
-
-        window.superSDK_Async = function () {
-
-            superSDK.init({ accessKey: "YCKD/WPFJBM2-TSCM3KN-J921JD2-9JDG1NC", secretKey: "e59f25d0-d659-41ce-9244-19344c9b00d5" }, function (response) { });
+        
+        window.superSDK_Async = function() {
+            
+            superSDK.init({accessKey: "GT23/WYPZ0FT-FS6MWNE-PE69D7F-HSB9BAW", secretKey: "e7adf03f-7e4d-4e55-b38c-969d8e5695ab"},function(response){});
             superSDK.setup({
-                store_name: "My SUPER STORE",
-                triggerer: "render_zone",
-                store_logo_url: 'https://freevector-images.s3.amazonaws.com/uploads/vector/preview/36682/36682.png',
+                store_name : "My SUPER STORE",
+                triggerer: "#paybtn",
+                store_logo_url : 'https://freevector-images.s3.amazonaws.com/uploads/vector/preview/36682/36682.png',
                 frame_color: '#3289a8'
             });
             superSDK.addItem({
                 name: "Cotisation / Don",
                 quantity: 1,
-                unit_price: 5,
-                item_photo: 'https://images.freeimages.com/images/small-previews/266/gift-1422193.jpg'
+                unit_price : 50,
+                item_photo : 'https://images.freeimages.com/images/small-previews/266/gift-1422193.jpg'
             });
             // define superSDK navigation
             superSDK.setNavigation({
