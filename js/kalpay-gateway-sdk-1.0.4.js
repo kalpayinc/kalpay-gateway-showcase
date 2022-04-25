@@ -19,7 +19,7 @@
                 o = document.querySelector(n.settings.triggerer || "#supersdk-container-button");
             o && (o.disabled = t)
         },
-        r = function() {
+        i = function() {
             e.superSDK.easyXDM && (e.superSDK.modal_rpc = new e.superSDK.easyXDM.Rpc({
                 remote: "https://dev.gateway.kalpayinc.com/",
                 onReady: broadcast("IFRAME_CHECKOUT_LOADED"),
@@ -46,19 +46,21 @@
                     loadSettingsAndPayload: {},
                     payment_status: {},
                     initTransactionCllbk: {},
+                    initCbTransactionCllbk: {},
                     completeTransactionCllbk: {}
                 },
                 local: {
                     hideModal: a,
-                    proceedPayment: i,
+                    proceedPayment: r,
                     initTransaction: p,
+                    initCbTransaction: l,
                     completeTransaction: u
                 }
             }), e.superSDK.promoteSettings = function(t) {
                 e.superSDK.modal_rpc.loadSettingsAndPayload(e.superSDK.settings, e.superSDK.items, e.superSDK.operators, t)
             }, s(!1))
         },
-        i = function(t, n) {
+        r = function(t, n) {
             e.superSDK.modal_rpc.payment_status("PAYMENT_PENDING"), scenario = n, setTimeout(() => {
                 broadcast(scenario), broadcast(t), e.superSDK.modal_rpc.payment_status(scenario)
             }, 1500 * Math.random())
@@ -71,13 +73,13 @@
         };
     t.prototype.ON_SITE = "on_site", t.prototype.OFF_SITE = "off_site", t.prototype.DEFAULT_BG_COLOR = "#6926bf", t.prototype.MODAL_TEMPLATE = '<div id="supersdk-container" style="z-index: 1000000000; position: fixed; top: 0px; display: none; left: 0px; height: 100%; width: 100%; backface-visibility: hidden; overflow-y: visible;"><div class="supersdk-backdrop" style="min-height: 100%; transition: all 0.3s ease-out 0s; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;"></div></div>';
     var c = function(n) {
-        t.script = $script.noConflict(), t.script("https://kalpay-gateway-resources.s3.us-east-2.amazonaws.com/v0/supersdk.templating.js", function() {
+        t.script = $script.noConflict(), t.script("https://kalpay-gateway-resources.s3.us-east-2.amazonaws.com/v0/supersdk.templating.min.js", function() {
             ! function() {
                 if (!e.superSDK.templating) return;
                 var t = e.superSDK.templating.template(e.superSDK.MODAL_TEMPLATE)();
                 document.body.insertAdjacentHTML("beforeend", t)
             }()
-        }), t.script("https://kalpay-gateway-resources.s3.us-east-2.amazonaws.com/v0/supersdk.rpc.js", function() {
+        }), t.script("https://kalpay-gateway-resources.s3.us-east-2.amazonaws.com/v0/supersdk.rpc.min.js", function() {
             e.superSDK.easyXDM && (e.superSDK.rpc = new e.superSDK.easyXDM.Rpc({
                 remote: "https://dev.service-backend.kalpayinc.com/invoiceservice/tunnel/",
                 onReady: broadcast("IFRAME_TUNNEL_LOADED")
@@ -86,9 +88,9 @@
                     apiTunnel: {}
                 }
             }), e.superSDK.api = function(t, n, o, s) {
-                const r = localStorage.getItem("supersdk.token");
-                e.superSDK.rpc.apiTunnel(t, n, o, location.host, r, s)
-            }), r(), n()
+                const i = localStorage.getItem("supersdk.token");
+                e.superSDK.rpc.apiTunnel(t, n, o, location.host, i, s)
+            }), i(), n()
         })
     };
     t.prototype.init = function(t, n) {
@@ -105,7 +107,7 @@
             api_key: t.api_key || null,
             processMode: t.processMode || this.ON_SITE
         }, this.items = [], this.operators = [], this.listen("CHECKOUT_IFRAME_CLOSED", function() {
-            e.superSDK.modal_rpc.payment_status(""), e.superSDK.modal_rpc.destroy(), r()
+            e.superSDK.modal_rpc.payment_status(""), e.superSDK.modal_rpc.destroy(), i()
         }), this.listen("PAYMENT_SUCCEEDED", function() {
             var t = e.superSDK;
             setTimeout(() => {
@@ -129,7 +131,7 @@
     };
     var p = t => {
             const s = localStorage.getItem("supersdk.invoice") ? JSON.parse(localStorage.getItem("supersdk.invoice"))._id : null;
-            let r = {
+            let i = {
                 payment: {
                     ...t,
                     type: "Payment",
@@ -137,12 +139,12 @@
                 },
                 invoiceId: s
             };
-            e.superSDK.api("/transaction/init", "POST", r, function(t) {
+            e.superSDK.api("/transaction/init", "POST", i, function(t) {
                 const {
-                    data: r,
-                    error: i
+                    data: i,
+                    error: r
                 } = t;
-                if (r) e.superSDK.modal_rpc.initTransactionCllbk(!0, null), n && (1 === n.readyState ? n.send(JSON.stringify({
+                if (i) e.superSDK.modal_rpc.initTransactionCllbk(!0, null), n && (1 === n.readyState ? n.send(JSON.stringify({
                     event: "invoice",
                     data: s
                 })) : (o(), n.onopen = (e => {
@@ -152,8 +154,38 @@
                     }))
                 })));
                 else {
-                    const t = JSON.parse(i);
+                    const t = JSON.parse(r);
                     e.superSDK.modal_rpc.initTransactionCllbk(!1, t.message || t.data)
+                }
+            })
+        },
+        l = t => {
+            const s = localStorage.getItem("supersdk.invoice") ? JSON.parse(localStorage.getItem("supersdk.invoice"))._id : null;
+            let i = {
+                payment: {
+                    ...t,
+                    type: "Payment",
+                    currency: "xof"
+                },
+                invoiceId: s
+            };
+            e.superSDK.api("/transaction/init_cb", "POST", i, function(t) {
+                const {
+                    data: i,
+                    error: r
+                } = t;
+                if (i) e.superSDK.modal_rpc.initCbTransactionCllbk(i.data, null), n && (1 === n.readyState ? n.send(JSON.stringify({
+                    event: "invoice",
+                    data: s
+                })) : (o(), n.onopen = (e => {
+                    n.send(JSON.stringify({
+                        event: "invoice",
+                        data: s
+                    }))
+                })));
+                else {
+                    const t = JSON.parse(r);
+                    e.superSDK.modal_rpc.initCbTransactionCllbk(!1, t.message || t.data)
                 }
             })
         },
@@ -213,24 +245,24 @@
             back_url: e.back_url
         }
     };
-    var l = {};
+    var d = {};
     t.prototype.listen = function(e, t) {
-        void 0 === l[e] && (l[e] = []), l[e].push(t)
+        void 0 === d[e] && (d[e] = []), d[e].push(t)
     }, t.prototype.unlisten = function(e, t) {
-        if (l[e])
-            for (let t = 0; t < l[e].length; t++) {
-                l[e][t].splice(t, 1);
+        if (d[e])
+            for (let t = 0; t < d[e].length; t++) {
+                d[e][t].splice(t, 1);
                 break
             }
     }, broadcast = function(e) {
-        if (l[e])
-            for (let t = 0; t < l[e].length; t++) {
-                (0, l[e][t])()
+        if (d[e])
+            for (let t = 0; t < d[e].length; t++) {
+                (0, d[e][t])()
             }
     };
-    var d = e.superSDK;
+    var m = e.superSDK;
     t.prototype.noConflict = function() {
-        return e.superSDK = d, new t
+        return e.superSDK = m, new t
     }, e.superSDK = new t
 }(window),
 function(e, t) {
@@ -240,19 +272,19 @@ function(e, t) {
         n = document,
         o = n.getElementsByTagName("head")[0],
         s = /^https?:\/\//,
-        r = t.$script,
-        i = {},
+        i = t.$script,
+        r = {},
         a = {},
         c = {},
         p = {},
-        u = !1,
-        l = "push",
+        l = !1,
+        u = "push",
         d = "readyState",
         m = "onreadystatechange";
 
     function f(e, t, n) {
         for (n = 0, j = e.length; n < j; ++n)
-            if (!t(e[n])) return u;
+            if (!t(e[n])) return l;
         return 1
     }
 
@@ -262,53 +294,53 @@ function(e, t) {
         })
     }
 
-    function g(t, n, o) {
-        t = t[l] ? t : [t];
-        var r = n && n.call,
-            u = r ? n : o,
-            d = r ? t.join("") : n,
+    function S(t, n, o) {
+        t = t[u] ? t : [t];
+        var i = n && n.call,
+            l = i ? n : o,
+            d = i ? t.join("") : n,
             m = t.length;
 
         function _(e) {
-            return e.call ? e() : i[e]
+            return e.call ? e() : r[e]
         }
 
         function D() {
             if (!--m)
-                for (var e in i[d] = 1, u && u(), c) f(e.split("|"), _) && !y(c[e], _) && (c[e] = [])
+                for (var e in r[d] = 1, l && l(), c) f(e.split("|"), _) && !y(c[e], _) && (c[e] = [])
         }
         return setTimeout(function() {
             y(t, function(t) {
                 if (p[t]) return d && (a[d] = 1), 2 == p[t] && D();
-                p[t] = 1, d && (a[d] = 1), S(!s.test(t) && e ? e + t + ".js" : t, D)
+                p[t] = 1, d && (a[d] = 1), g(!s.test(t) && e ? e + t + ".js" : t, D)
             })
-        }, 0), g
+        }, 0), S
     }
 
-    function S(e, t) {
+    function g(e, t) {
         var s = n.createElement("script"),
-            r = u;
+            i = l;
         s.onload = s.onerror = s[m] = function() {
-            s[d] && !/^c|loade/.test(s[d]) || r || (s.onload = s[m] = null, r = 1, p[e] = 2, t())
+            s[d] && !/^c|loade/.test(s[d]) || i || (s.onload = s[m] = null, i = 1, p[e] = 2, t())
         }, s.async = 1, s.src = e, o.insertBefore(s, o.firstChild)
     }
     return !n[d] && n.addEventListener && (n.addEventListener("DOMContentLoaded", function e() {
-        n.removeEventListener("DOMContentLoaded", e, u), n[d] = "complete"
-    }, u), n[d] = "loading"), g.get = S, g.order = function(e, t, n) {
+        n.removeEventListener("DOMContentLoaded", e, l), n[d] = "complete"
+    }, l), n[d] = "loading"), S.get = g, S.order = function(e, t, n) {
         ! function o(s) {
-            s = e.shift(), e.length ? g(s, o) : g(s, t, n)
+            s = e.shift(), e.length ? S(s, o) : S(s, t, n)
         }()
-    }, g.path = function(t) {
+    }, S.path = function(t) {
         e = t
-    }, g.ready = function(e, t, n) {
-        e = e[l] ? e : [e];
+    }, S.ready = function(e, t, n) {
+        e = e[u] ? e : [e];
         var o, s = [];
         return !y(e, function(e) {
-            i[e] || s[l](e)
+            r[e] || s[u](e)
         }) && f(e, function(e) {
-            return i[e]
-        }) ? t() : (o = e.join("|"), c[o] = c[o] || [], c[o][l](t), n && n(s)), g
-    }, g.noConflict = function() {
-        return t.$script = r, this
-    }, g
+            return r[e]
+        }) ? t() : (o = e.join("|"), c[o] = c[o] || [], c[o][u](t), n && n(s)), S
+    }, S.noConflict = function() {
+        return t.$script = i, this
+    }, S
 }), "function" == typeof window.superSDK_Async && window.superSDK_Async();
