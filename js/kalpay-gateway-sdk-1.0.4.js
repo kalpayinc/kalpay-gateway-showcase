@@ -54,7 +54,8 @@
                     proceedPayment: r,
                     initTransaction: p,
                     initCbTransaction: l,
-                    completeTransaction: u
+                    initCbTransactionV2: u,
+                    completeTransaction: d
                 }
             }), e.superSDK.promoteSettings = function(t) {
                 e.superSDK.modal_rpc.loadSettingsAndPayload(e.superSDK.settings, e.superSDK.items, e.superSDK.operators, t)
@@ -96,7 +97,7 @@
     t.prototype.init = function(t, n) {
         c(function() {
             var o, s;
-            o = t, s = n, e.superSDK.api("/auth/login", "POST", o, function(e) {
+            o = t, s = n, e.superSDK.api("/auth/apikey", "POST", o, function(e) {
                 const {
                     data: t,
                     error: n
@@ -190,6 +191,36 @@
             })
         },
         u = t => {
+            const s = localStorage.getItem("supersdk.invoice") ? JSON.parse(localStorage.getItem("supersdk.invoice"))._id : null;
+            let i = {
+                payment: {
+                    ...t,
+                    type: "Payment",
+                    currency: "xof"
+                },
+                invoiceId: s
+            };
+            e.superSDK.api("/transaction/v2/init_cb", "POST", i, function(t) {
+                const {
+                    data: i,
+                    error: r
+                } = t;
+                if (i) e.superSDK.modal_rpc.initCbTransactionCllbk(i.data, null), n && (1 === n.readyState ? n.send(JSON.stringify({
+                    event: "invoice",
+                    data: s
+                })) : (o(), n.onopen = (e => {
+                    n.send(JSON.stringify({
+                        event: "invoice",
+                        data: s
+                    }))
+                })));
+                else {
+                    const t = JSON.parse(r);
+                    e.superSDK.modal_rpc.initCbTransactionCllbk(!1, t.message || t.data)
+                }
+            })
+        },
+        d = t => {
             let n = {
                 ...t,
                 invoiceId: localStorage.getItem("supersdk.invoice") ? JSON.parse(localStorage.getItem("supersdk.invoice"))._id : null
@@ -245,24 +276,24 @@
             back_url: e.back_url
         }
     };
-    var d = {};
+    var m = {};
     t.prototype.listen = function(e, t) {
-        void 0 === d[e] && (d[e] = []), d[e].push(t)
+        void 0 === m[e] && (m[e] = []), m[e].push(t)
     }, t.prototype.unlisten = function(e, t) {
-        if (d[e])
-            for (let t = 0; t < d[e].length; t++) {
-                d[e][t].splice(t, 1);
+        if (m[e])
+            for (let t = 0; t < m[e].length; t++) {
+                m[e][t].splice(t, 1);
                 break
             }
     }, broadcast = function(e) {
-        if (d[e])
-            for (let t = 0; t < d[e].length; t++) {
-                (0, d[e][t])()
+        if (m[e])
+            for (let t = 0; t < m[e].length; t++) {
+                (0, m[e][t])()
             }
     };
-    var m = e.superSDK;
+    var f = e.superSDK;
     t.prototype.noConflict = function() {
-        return e.superSDK = m, new t
+        return e.superSDK = f, new t
     }, e.superSDK = new t
 }(window),
 function(e, t) {
@@ -305,14 +336,14 @@ function(e, t) {
             return e.call ? e() : r[e]
         }
 
-        function D() {
+        function v() {
             if (!--m)
                 for (var e in r[d] = 1, l && l(), c) f(e.split("|"), _) && !y(c[e], _) && (c[e] = [])
         }
         return setTimeout(function() {
             y(t, function(t) {
-                if (p[t]) return d && (a[d] = 1), 2 == p[t] && D();
-                p[t] = 1, d && (a[d] = 1), g(!s.test(t) && e ? e + t + ".js" : t, D)
+                if (p[t]) return d && (a[d] = 1), 2 == p[t] && v();
+                p[t] = 1, d && (a[d] = 1), g(!s.test(t) && e ? e + t + ".js" : t, v)
             })
         }, 0), S
     }
